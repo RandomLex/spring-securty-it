@@ -14,7 +14,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/", "/index.html").permitAll()
+//                .anyRequest().authenticated()
+                .antMatchers("/employees").authenticated()
+                .antMatchers("/info").hasRole("ADMIN")
+                .and()
+                .formLogin()
                 .and()
                 .httpBasic();
     }
@@ -25,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("alex")
                 .password("123")
-                .roles("USER")
+                .roles("USER", "ADMIN")
                 .build());
         return manager;
     }
