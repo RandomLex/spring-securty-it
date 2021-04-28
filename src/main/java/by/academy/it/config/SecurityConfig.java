@@ -15,13 +15,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/index.html").permitAll()
-//                .anyRequest().authenticated()
                 .antMatchers("/employees").authenticated()
                 .antMatchers("/info").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .logout().logoutSuccessUrl("/");
     }
 
     @Bean
@@ -31,6 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .username("alex")
                 .password("123")
                 .roles("USER", "ADMIN")
+                .build());
+        manager.createUser(User.withDefaultPasswordEncoder()
+                .username("bob")
+                .password("111")
+                .roles("USER")
                 .build());
         return manager;
     }
