@@ -3,6 +3,8 @@ package by.academy.it.repositories;
 import by.academy.it.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+import java.util.Optional;
 
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+    Optional<Employee> findByName(String name);
 }
