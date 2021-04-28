@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/index.html").permitAll()
                 .antMatchers("/employees").authenticated()
-                .antMatchers("/info").hasRole("ADMIN")
+                .antMatchers("/info").hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()
                 .and()
@@ -28,14 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withDefaultPasswordEncoder()
+        manager.createUser(User.builder()
                 .username("alex")
-                .password("123")
+                .password("{bcrypt}$2y$12$xkiuac97NTnlIh8QmOOjYeVdGYDcxuw9iCanuuVBPxHBdd4ahDAW6")
                 .roles("USER", "ADMIN")
                 .build());
-        manager.createUser(User.withDefaultPasswordEncoder()
+        manager.createUser(User.builder()
                 .username("bob")
-                .password("111")
+                .password("{bcrypt}$2y$12$bWmoc/QDn.l1TP4Focqc7u29a.bn7.UffozYsJbd0vEOEQ/1BiBsK")
                 .roles("USER")
                 .build());
         return manager;

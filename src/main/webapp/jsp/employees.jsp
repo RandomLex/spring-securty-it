@@ -17,6 +17,8 @@
         </tr>
     </c:forEach>
 </table>
-
+<footer>
+    <p><a href="logout">Logout</a> </p>
+</footer>
 </body>
 </html>
