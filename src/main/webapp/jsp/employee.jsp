@@ -6,6 +6,9 @@
     <title>Employees</title>
 </head>
 <body>
+<a href="index.html">Домой</a>
+<br>
+
 <c:out value="Текущий пользователь: ${requestScope.principal.name}"/>
 <table>
     <th>Имя</th>
